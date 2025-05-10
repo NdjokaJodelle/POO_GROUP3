@@ -2,6 +2,7 @@
 
 ## Équipe de développement
 Ce projet a été réalisé par une équipe de cinq étudiants dans le cadre du cours de Programmation Orientée Objet. Il s'agit de:
+
 `Membres:`
 * NDJOKA NGHOKO JODELLE BARUCH 22E0480EP
 * MEFIRA MAHAMADOU 24ENSPM451
