@@ -8,12 +8,12 @@ class SlantedRectangle extends Rectangle {
         this.largeur = largeur / Math.cos(Math.toRadians(angle));
     }
 
-    public SlantedRectangle(Point p, int largeur, int hauteur, double angle) {
+    public SlantedRectangle(Point p, double largeur, double hauteur, double angle) {
         super(p, largeur, hauteur);
         this.angle = angle;
     }
 
-    public SlantedRectangle(int x1, int y1, int x2, int y2, double angle) {
+    public SlantedRectangle(double x1, double y1, double x2, double y2, double angle) {
         super(x1, y1, x2, y2);
         this.angle = angle;
         this.longueur = longueur / Math.cos(Math.toRadians(angle));
@@ -44,15 +44,15 @@ class SlantedRectangle extends Rectangle {
     super.translate(dx, dy); 
 }
     @Override
-    public void surface() {
-    super.surface();
+    public double surface() {
+    return super.surface();
 }
     @Override
     public boolean contains(Point p) {
     // Transformation inverse pour tester l'inclusion dans le rectangle non incliné
     double rad = Math.toRadians(-angle);
-    int xprim = (int) (Math.cos(rad) * (p.getx() - A.getx()) - Math.sin(rad) * (p.gety() - A.gety()) + A.getx());
-    int yprim = (int) (Math.sin(rad) * (p.getx() - A.getx()) + Math.cos(rad) * (p.gety() - A.gety()) + A.gety());
+    double xprim =  (Math.cos(rad) * (p.getx() - A.getx()) - Math.sin(rad) * (p.gety() - A.gety()) + A.getx());
+    double yprim =  (Math.sin(rad) * (p.getx() - A.getx()) + Math.cos(rad) * (p.gety() - A.gety()) + A.gety());
     if (super.contains(new Point(xprim, yprim))){
     System.out.println ("Le point (" + p.getx() + ", " + p.gety() + ") est contenu dans le rectangle [(" + A.getx() + ", " + A.gety() + ", " + longueur + ", " + largeur + " )]");  
     return true;
@@ -66,7 +66,7 @@ class SlantedRectangle extends Rectangle {
     public boolean contains(SlantedRectangle R) {
     // Transformation inverse pour tester l'inclusion dans le rectangle non incliné
     double rad = Math.toRadians(-angle);
-    double teta = Math.toRadians(R.angle);
+    double teta =  Math.toRadians(R.angle);
     double xprim1 =  (Math.cos(rad) * ((R.A.getx() + R.longueur * Math.cos(teta)) - A.getx()) - Math.sin(rad) * ((R.A.gety() + R.longueur * Math.sin(teta)) - A.gety()) + A.getx());
     double yprim1 =  (Math.sin(rad) * ((R.A.getx() + R.longueur * Math.cos(teta)) - A.getx()) + Math.cos(rad) * ((R.A.gety() + R.longueur * Math.sin(teta)) - A.gety()) + A.gety());
     double xprim2 =  (Math.cos(rad) * ((R.A.getx() - R.largeur * Math.sin(teta)) - A.getx()) - Math.sin(rad) * ((R.A.gety() + R.largeur * Math.cos(teta)) - A.gety()) + A.getx());
@@ -86,6 +86,13 @@ class SlantedRectangle extends Rectangle {
         System.out.println ("Le rectangle de caractéristiques " + R.A.getx() + ", " + R.A.gety() + ", " + R.longueur + ", " + R.largeur + ") n'est pas contenu dans le rectangle [(" + A.getx() + ", " + A.gety() + ", " + longueur + ", " + largeur + " )]");  
         return false;
     }
+}
+@Override
+public boolean equals(Object obj) {
+    if (!super.equals(obj)) return false; // Vérifie d'abord avec Rectangle.equals()
+
+    SlantedRectangle sr = (SlantedRectangle) obj;
+    return angle == sr.angle; // Compare l'angle en plus
 }
 
 }
